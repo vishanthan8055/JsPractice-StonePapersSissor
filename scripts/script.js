@@ -51,7 +51,6 @@ export function play(playerOption){
     resultHtml = generateResultHTML(yourMove, computerMove, resultText);
     let resultEle = document.querySelector('.js-result');
     resultEle.innerHTML = resultHtml;
-    console.log(computerOption + " " + playerOption+ " "+ resultText);
 }
 
 function getComputerOption(){
