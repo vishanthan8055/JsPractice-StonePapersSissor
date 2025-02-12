@@ -1,0 +1,27 @@
+body{
+    background-color: black;
+    color: white;
+    font-size: larger;
+}
+
+.move-btn{
+    background-color: black;
+    border: 5px solid white;
+    padding: 50px;
+    border-radius: 50%;
+}
+.move-btn>img{
+    width: 100px;
+    height: 100px;
+}
+.move-result{
+    font-size: 30px;
+}
+.move-result>img{
+    background-color: black;
+    border: 5px solid white;
+    padding: 50px;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}

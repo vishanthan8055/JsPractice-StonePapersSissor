@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stone Paper Sissor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Choose a Move to play:</h1>
+    <button 
+        class = "move-btn" 
+        onclick="play('stone')">
+        <img src="images/rock-emoji.png" alt="stone">
+    </button>
+    <button 
+        class = "move-btn" 
+        onclick="play('paper')">
+        <img src="images/paper-emoji.png" alt="stone">
+    </button>
+    <button 
+        class = "move-btn" 
+        onclick="play('sissor')">
+        <img src="images/scissors-emoji.png" alt="stone">
+    </button>
+    <div class="js-resultPanal">
+    <h1>
+        Result
+    </h1>
+    <p class = 'js-result'></p>
+    </div>
+
+    <script type="module" src="scripts/script.js"></script>
+</body>
+</html>
