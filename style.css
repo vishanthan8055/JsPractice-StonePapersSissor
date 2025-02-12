@@ -20,8 +20,8 @@ body{
 .move-result>img{
     background-color: black;
     border: 5px solid white;
-    padding: 50px;
+    padding: 20px;
     border-radius: 50%;
-    width: 100px;
-    height: 100px;
+    width: 30px;
+    height: 30px;
 }
