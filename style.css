@@ -27,11 +27,14 @@ button{
     width: 30px;
     height: 30px;
 }
-.auto-play-btn{
+.auto-play-btn,.reset-score-btn{
     background-color: black;
     border: 2px solid white;
     border-radius: 20px;
     color: white;
     font-size: 20px;
     padding: 10px;
+}
+.score-board{
+    font-size: 20px;
 }
