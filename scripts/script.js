@@ -2,6 +2,7 @@ import {Move} from './Move.js';
 
 let isPlaying = false;
 let autoPlayIntervalID;
+let playerResult = -1;
 
 let stoneMove = new Move('stone','rock-emoji.png');
 let paperMove = new Move('paper','paper-emoji.png');
@@ -11,7 +12,14 @@ let stoneBtnEle = document.querySelector('.js-stone-btn');
 let paperBtnEle = document.querySelector('.js-paper-btn');
 let sissorBtnEle = document.querySelector('.js-sissor-btn');
 
-let autoPlayEle = document.querySelector('.js-autoplay-btn')
+let autoPlayEle = document.querySelector('.js-autoplay-btn');
+let resetScoreBtnEle = document.querySelector('.js-resetScore-btn');
+let scoreBoardEle = document.querySelector('.js-score-board');
+
+scoreBoardEle.innerHTML = `Player Score: ${localStorage.getItem('playerScore')} || Computer Score: ${localStorage.getItem('computerScore')}`;
+
+!localStorage.getItem('playerScore')?localStorage.setItem('playerScore',0):{};
+!localStorage.getItem('computerScore')?localStorage.setItem('computerScore',0):{};
 
 stoneBtnEle.addEventListener('click',()=>{
     play('stone');
@@ -36,6 +44,11 @@ autoPlayEle.addEventListener('click',()=>{
         isPlaying = true;
     }
 });
+resetScoreBtnEle.addEventListener('click',()=>{
+    localStorage.setItem('playerScore',0);
+    localStorage.setItem('computerScore',0);
+    updateScoresLocal();
+});
 export function autoPlay(){
     let autoMove = getComputerOption();
     play(autoMove);
@@ -50,41 +63,41 @@ export function play(playerOption){
         computerMove = stoneMove;
         if(playerOption === 'paper'){
             yourMove = paperMove;
-            resultText = 'You Win, Computer Lost';
+            playerResult = 1;
         }else if(playerOption === 'sissor'){
+            playerResult = 0;
             yourMove = sissorMove;
-            resultText = 'You Lost, Computer Win';
         }else{
             yourMove = stoneMove;
-            resultText = 'Tie';
+            playerResult = -1;
         }
     }else if(computerOption == 'paper'){
         computerMove = paperMove;
         if(playerOption === 'paper'){
             yourMove = paperMove;
-            resultText = 'Tie';
+            playerResult = -1;
         }else if(playerOption === 'sissor'){
             yourMove = sissorMove;
-            resultText = 'You Win, Computer Lost';
+            playerResult = 1;
         }else{
             yourMove = stoneMove;
-            resultText = 'You Lost, Computer Win';
+            playerResult = 0;
         }
     }else{
         computerMove = sissorMove;
         if(playerOption === 'paper'){
             yourMove = paperMove;
-            resultText = 'You Lost, Computer Win';
+            playerResult = 0;
         }else if(playerOption === 'sissor'){
             yourMove = sissorMove;
-            resultText = 'Tie';
+            playerResult = -1;
         }else{
             yourMove = stoneMove;
-            resultText = 'You Win, Computer Lost';
+            playerResult = 1;
         }
     }
     
-    resultHtml = generateResultHTML(yourMove, computerMove, resultText);
+    resultHtml = generateResultHTML(yourMove, computerMove, playerResult);
     let resultEle = document.querySelector('.js-result');
     resultEle.innerHTML = resultHtml;
 }
@@ -99,11 +112,30 @@ function getComputerOption(){
     return 'scissor';
 }
 
-function generateResultHTML(yourMove, computerMove, resultText){
+function generateResultHTML(yourMove, computerMove, playerResult){
     let resultHtml = "";
+    let resultText = "";
+    if(playerResult === 0){
+        localStorage.setItem('computerScore',
+            Number(localStorage.getItem('computerScore')) + 1
+        );
+        resultText = 'You Lost, Computer Win';
+    }else if(playerResult === 1){
+        localStorage.setItem('playerScore',
+            Number(localStorage.getItem('playerScore')) + 1
+        );
+        resultText = 'You Win, Computer Lost';
+    } else{
+        resultText = 'Tie';
+    }
 
+    updateScoresLocal();
     resultHtml = `<p class='move-result'> Your Move: <img src='images/${yourMove.moveImage}'> </p>
                   <p class='move-result'> Computer Move: <img src='images/${computerMove.moveImage}'> </p>
                   <h1>${resultText}</h1>`;
     return resultHtml;
+}
+
+function updateScoresLocal(){
+    scoreBoardEle.innerHTML = `Player Score: ${localStorage.getItem('playerScore')} || Computer Score: ${localStorage.getItem('computerScore')}`;
 }
