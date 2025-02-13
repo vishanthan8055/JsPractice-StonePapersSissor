@@ -1,9 +1,45 @@
 import {Move} from './Move.js';
 
+let isPlaying = false;
+let autoPlayIntervalID;
+
 let stoneMove = new Move('stone','rock-emoji.png');
 let paperMove = new Move('paper','paper-emoji.png');
 let sissorMove = new Move('sissor','scissors-emoji.png');
 
+let stoneBtnEle = document.querySelector('.js-stone-btn');
+let paperBtnEle = document.querySelector('.js-paper-btn');
+let sissorBtnEle = document.querySelector('.js-sissor-btn');
+
+let autoPlayEle = document.querySelector('.js-autoplay-btn')
+
+stoneBtnEle.addEventListener('click',()=>{
+    play('stone');
+});
+
+paperBtnEle.addEventListener('click',()=>{
+    play('paper');
+});
+
+sissorBtnEle.addEventListener('click',()=>{
+    play('sissor');
+});
+
+autoPlayEle.addEventListener('click',()=>{
+    if(isPlaying){
+        clearInterval(autoPlayIntervalID);
+        isPlaying = false;
+    }else{
+        autoPlayIntervalID = setInterval(()=>{
+            autoPlay();
+        },500);
+        isPlaying = true;
+    }
+});
+export function autoPlay(){
+    let autoMove = getComputerOption();
+    play(autoMove);
+}
 export function play(playerOption){
     let resultHtml = "";
     let resultText = "";
@@ -71,4 +107,3 @@ function generateResultHTML(yourMove, computerMove, resultText){
                   <h1>${resultText}</h1>`;
     return resultHtml;
 }
-window.play = play;
